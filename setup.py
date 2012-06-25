@@ -21,5 +21,6 @@ setup(
 		'Programming Language :: Python',
 		'License :: Freeware',
 	),
+	download_url='https://github.com/six519/PyGlobe',
 )
 	
