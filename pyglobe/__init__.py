@@ -3,7 +3,7 @@
 * @author: Ferdinand E. Silva
 * @email: ferdinandsilva@ferdinandsilva.com
 * @title: PyGlobe
-* @description: Python interface for Globe API
+* @description: Python interface for Globe Labs API
 * @notes: sendMMS coming soon.. ;)
 ***********************************************
 """

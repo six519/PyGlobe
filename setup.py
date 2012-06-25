@@ -8,7 +8,7 @@ except ImportError:
 setup(
 	name='PyGlobe',
 	version=pyglobe.__version__,
-	description='Python interface for Globe API',
+	description='Python interface for Globe Labs API',
 	author='Ferdinand Silva',
 	author_email='ferdinandsilva@ferdinandsilva.com',
 	packages=['pyglobe'],
