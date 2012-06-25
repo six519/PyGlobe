@@ -14,4 +14,4 @@ EXAMPLE CODE
     except (pyglobe.PyGlobeInvalidServiceException,
             pyglobe.PyGlobeInvalidURLException,
             pyglobe.PyGlobeServerFaultException) as e:
-        print "An error occurred: %s" % e``
+        print "An error occurred: %s" % e
