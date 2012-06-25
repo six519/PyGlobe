@@ -1,0 +1,10 @@
+# standard
+*~
+*.pyc
+*.pyo
+*.mo
+*.log
+*.pid
+*.egg-info
+.coverage
+.DS_Store
