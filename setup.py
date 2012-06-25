@@ -13,7 +13,7 @@ setup(
 	author_email='ferdinandsilva@ferdinandsilva.com',
 	packages=['pyglobe'],
 	install_requires=['suds'],
-	url='https://github.com/six519/PyGlobe',
+	url='http://ferdinandsilva.com',
 	classifiers=(
 		'Development Status :: 4 - Beta',
 		'Intended Audience :: Developers',
