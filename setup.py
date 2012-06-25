@@ -14,5 +14,12 @@ setup(
 	packages=['pyglobe'],
 	install_requires=['suds'],
 	url='https://github.com/six519/PyGlobe',
+	classifiers=(
+		'Development Status :: 4 - Beta',
+		'Intended Audience :: Developers',
+		'Natural Language :: English',
+		'Programming Language :: Python',
+		'License :: Freeware',
+	),
 )
 	
