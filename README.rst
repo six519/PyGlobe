@@ -6,6 +6,7 @@ To install run ``pip install pyglobe`` or ``easy_install pyglobe``.
 EXAMPLE CODE
 ------------
 ::
+
     import pyglobe
 
     try:
