@@ -1,0 +1,10 @@
+EXAMPLE CODE
+-------------------
+
+import pyglobe
+
+try:
+	service = pyglobe.PyGlobe(uname='gzqloovr0', pin='21737796', msisdn='09178363916')
+	service.sendSMS('Message through Globe Labs API')
+except (PyGlobeInvalidServiceException, PyGlobeInvalidURLException, PyGlobeServerFaultException) as e:
+	print "An error occurred: %s" % e
