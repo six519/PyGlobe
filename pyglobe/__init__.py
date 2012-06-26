@@ -7,7 +7,7 @@
 * @notes: sendMMS coming soon.. ;)
 ***********************************************
 """
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "Ferdinand E. Silva"
 
 from .core import *
