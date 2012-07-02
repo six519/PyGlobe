@@ -62,6 +62,7 @@ class PyGlobe(object):
         self.mwi = kwargs.get('mwi', PyGlobeMWI.NONE)
         self.coding = kwargs.get('coding', PyGlobeCoding.BIT_7)
         self.service = None
+        
         try:
             import suds
             self.service = suds.client.Client(self.wsdl)
@@ -69,41 +70,47 @@ class PyGlobe(object):
             raise PyGlobeInvalidServiceException('Service Unknown')
         except ValueError:
             raise PyGlobeInvalidURLException('Invalid URL')
+        
+    def translateMsg(self, ret):
+        if ret == PyGlobeReturnCode.SMS_ACCEPTED or ret == PyGlobeReturnCode.MMS_ACCEPTED:
+            return True
+        elif ret == PyGlobeReturnCode.NOT_ALLOWED:
+            raise PyGlobeServerFaultException("User is not allowed to access this service")
+        elif ret == PyGlobeReturnCode.EXCEEDED_DAILY_CAP:
+            raise PyGlobeServerFaultException("User exceeded daily cap")
+        elif ret == PyGlobeReturnCode.INVALID_MESSAGE_LENGTH:
+            raise PyGlobeServerFaultException("Invalid message length")
+        elif ret == PyGlobeReturnCode.MAX_NUMBER_CONNECTION:
+            raise PyGlobeServerFaultException("Maximum Number of simultaneous connections reached")
+        elif ret == PyGlobeReturnCode.INVALID_LOGIN_CREDENTIALS:
+            raise PyGlobeServerFaultException("Invalid login credentials")
+        elif ret == PyGlobeReturnCode.SMS_SENDING_FAILED:
+            raise PyGlobeServerFaultException("SMS sending failed")
+        elif ret == PyGlobeReturnCode.INVALID_TARGET:
+            raise PyGlobeServerFaultException("Invalid target MSISDN")
+        elif ret == PyGlobeReturnCode.INVALID_DISPLAY:
+            raise PyGlobeServerFaultException("Invalid display type")
+        elif ret == PyGlobeReturnCode.INVALID_MWI:
+            raise PyGlobeServerFaultException("Invalid MWI")
+        elif ret == PyGlobeReturnCode.BAD_XML:
+            raise PyGlobeServerFaultException("Badly formed XML in SOAP request")
+        elif ret == PyGlobeReturnCode.INVALID_CODING:
+            raise PyGlobeServerFaultException("Invalid Coding")
+        elif ret == PyGlobeReturnCode.EMPTY_VALUE:
+            raise PyGlobeServerFaultException("Empty value given in required argument")
+        elif ret == PyGlobeReturnCode.ARGUMENT_TOO_LARGE:
+            raise PyGlobeServerFaultException("Argument given too large")
 
-    def sendSMS(self, message = ""):
+    def sendSMS(self, message):
         try:
             ret = self.service.service.sendSMS(self.uname, self.pin, self.msisdn, message, self.display, self.udh, self.mwi, self.coding)
-            
-            if ret == PyGlobeReturnCode.SMS_ACCEPTED:
-                return True
-            elif ret == PyGlobeReturnCode.NOT_ALLOWED:
-                raise PyGlobeServerFaultException("User is not allowed to access this service")
-            elif ret == PyGlobeReturnCode.EXCEEDED_DAILY_CAP:
-                raise PyGlobeServerFaultException("User exceeded daily cap")
-            elif ret == PyGlobeReturnCode.INVALID_MESSAGE_LENGTH:
-                raise PyGlobeServerFaultException("Invalid message length")
-            elif ret == PyGlobeReturnCode.MAX_NUMBER_CONNECTION:
-                raise PyGlobeServerFaultException("Maximum Number of simultaneous connections reached")
-            elif ret == PyGlobeReturnCode.INVALID_LOGIN_CREDENTIALS:
-                raise PyGlobeServerFaultException("Invalid login credentials")
-            elif ret == PyGlobeReturnCode.SMS_SENDING_FAILED:
-                raise PyGlobeServerFaultException("SMS sending failed")
-            elif ret == PyGlobeReturnCode.INVALID_TARGET:
-                raise PyGlobeServerFaultException("Invalid target MSISDN")
-            elif ret == PyGlobeReturnCode.INVALID_DISPLAY:
-                raise PyGlobeServerFaultException("Invalid display type")
-            elif ret == PyGlobeReturnCode.INVALID_MWI:
-                raise PyGlobeServerFaultException("Invalid MWI")
-            elif ret == PyGlobeReturnCode.BAD_XML:
-                raise PyGlobeServerFaultException("Badly formed XML in SOAP request")
-            elif ret == PyGlobeReturnCode.INVALID_CODING:
-                raise PyGlobeServerFaultException("Invalid Coding")
-            elif ret == PyGlobeReturnCode.EMPTY_VALUE:
-                raise PyGlobeServerFaultException("Empty value given in required argument")
-            elif ret == PyGlobeReturnCode.ARGUMENT_TOO_LARGE:
-                raise PyGlobeServerFaultException("Argument given too large")
+            return self.translateMsg(ret)
         except urllib2.URLError:
             raise PyGlobeInvalidServiceException('Service Unknown')
-
-    def sendMMS(self):
-        pass
+        
+    def sendMMS(self, subject, smil):
+        try:
+            ret = self.service.service.sendMMS(self.uname, self.pin, self.msisdn, subject, smil)
+            return self.translateMsg(ret)
+        except urllib2.URLError:
+            raise PyGlobeInvalidServiceException('Service Unknown')
