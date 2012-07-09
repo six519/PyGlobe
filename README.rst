@@ -1,3 +1,8 @@
+FIRST OF ALL
+--------------
+Register to https://www.globelabs.com.ph to access Globe Labs API
+
+
 HOW TO INSTALL
 --------------
 To install run ``pip install pyglobe`` or ``easy_install pyglobe``.
